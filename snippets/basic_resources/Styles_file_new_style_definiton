@@ -1,0 +1,3 @@
+<style name="ToDoTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+    <item name="android:textSize">12sp</item>
+</style>

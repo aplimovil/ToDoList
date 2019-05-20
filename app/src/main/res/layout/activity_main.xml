@@ -8,14 +8,14 @@
         android:id="@+id/myEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New task" />
+        android:text="@string/default_task_name" />
 
     <Button
         android:id="@+id/myButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:text="Add"
+        android:text="@string/save"
         android:textAllCaps="false"
         android:textStyle="bold" />
 
