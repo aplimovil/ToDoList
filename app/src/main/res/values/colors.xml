@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
     <color name="orange">#ff9900</color>
     <color name="blue">#0000ff</color>
     <color name="green">#f0f0</color>
     <color name="white">#FFFFFF</color>
+
+    <color name="notepad_paper">#AAFFFF99</color>
+    <color name="notepad_lines">#FF0000FF</color>
+    <color name="notepad_margin">#90FF0000</color>
+    <color name="notepad_text">#AA0000FF</color>
+
     <drawable name="black_rectangle">#000000</drawable>
 </resources>

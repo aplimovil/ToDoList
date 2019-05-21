@@ -2,17 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:background="@drawable/rounded">
+    android:background="@drawable/rounded"
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/myEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/default_task_name"
-        android:visibility="gone"
         android:background="@drawable/black_rectangle"
-        android:textColor="@color/white"/>
+        android:text="@string/default_task_name"
+        android:textColor="@color/white"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/myButton"
@@ -22,11 +22,11 @@
         android:text="@string/save"
         android:textAllCaps="false"
         android:textStyle="bold"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <ListView
         android:id="@+id/myListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/orange"/>
+        />
 </LinearLayout>

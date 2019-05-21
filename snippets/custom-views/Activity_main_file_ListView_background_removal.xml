@@ -1,0 +1,13 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <!--************* Update this code ************** -->
+
+<ListView
+    android:id="@+id/myListView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+/>
+
+    <!--************* Update this code ************** -->
+
+    </LinearLayout>

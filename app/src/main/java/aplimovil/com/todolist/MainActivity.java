@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         if (todoItems == null)
             todoItems = new ArrayList<String>();
         // Create the array adapter to bind the array to the listview
-        aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, todoItems);
+        aa = new ArrayAdapter<String>(this, R.layout.todolist_item, todoItems);
         // Bind the array adapter to the listview.
         myListView.setAdapter(aa);
 

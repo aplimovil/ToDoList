@@ -2,4 +2,5 @@
 <resources>
     <dimen name="font_port_size">20sp</dimen>
     <dimen name="font_land_size">32sp</dimen>
+    <dimen name="notepad_margin">30dp</dimen>
 </resources>

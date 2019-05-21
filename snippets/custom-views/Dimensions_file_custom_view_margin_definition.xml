@@ -1,0 +1,9 @@
+<resources>
+
+    <!-- ************* Add this code *********** -->
+
+    <dimen name="notepad_margin">30dp</dimen>
+
+    <!-- ************* Add this code *********** -->
+
+</resources>
