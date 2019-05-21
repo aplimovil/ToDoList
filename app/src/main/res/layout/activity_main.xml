@@ -8,7 +8,8 @@
         android:id="@+id/myEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/default_task_name" />
+        android:text="@string/default_task_name"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/myButton"
@@ -17,7 +18,8 @@
         android:layout_gravity="right"
         android:text="@string/save"
         android:textAllCaps="false"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone"/>
 
     <ListView
         android:id="@+id/myListView"
