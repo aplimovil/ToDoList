@@ -37,7 +37,9 @@ public class MainActivity extends AppCompatActivity {
         myButton = (Button) findViewById(R.id.myButton);
 
         // Create the array list of to do items
-        todoItems = new ArrayList<String>();
+        todoItems = (ArrayList<String>) getLastCustomNonConfigurationInstance();
+        if (todoItems == null)
+            todoItems = new ArrayList<String>();
         // Create the array adapter to bind the array to the listview
         aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, todoItems);
         // Bind the array adapter to the listview.
@@ -58,6 +60,28 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    //Use this method to save EditText/Button status when phone goes to landscape/portrait mode
+    protected void onSaveInstanceState(Bundle instanceState) {
+        super.onSaveInstanceState(instanceState);
+        instanceState.putInt("visualState", myEditText.getVisibility());
+    }
+
+    //Use this method to recover EditText/Button status when phone goes to landscape/portrait mode
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState.getInt("visualState") == View.VISIBLE) {
+            myEditText.setVisibility(View.VISIBLE);
+            myButton.setVisibility(View.VISIBLE);
+        }
+    }
+
+    //Use this method to recover the ListView items when phone goes to portrait/landscape mode
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return (todoItems);
+    }
+
 
     //Create the options menu
     @Override

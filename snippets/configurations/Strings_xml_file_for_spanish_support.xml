@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ToDoList</string>
+    <string name="add_new">Agregar tarea</string>
+    <string name="save">Agregar</string>
+    <string name="remove">Eliminar tarea</string>
+    <string name="cancel">Cancelar</string>
+    <string name="default_task_name">Nueva tarea</string>
+    <string name="menu_title">Tarea seleccionada</string>
+</resources>

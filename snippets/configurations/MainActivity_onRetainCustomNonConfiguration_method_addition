@@ -1,0 +1,31 @@
+
+public class MainActivity extends AppCompatActivity {
+
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+
+       /****************************** Update this code *********************************/
+
+        // Create the array list of to do items
+        todoItems = (ArrayList<String>) getLastCustomNonConfigurationInstance();
+        if (todoItems == null)
+        todoItems = new ArrayList<String>();
+
+
+        /****************************** Update this code *********************************/
+
+}
+
+    /********************************* Add this code ****************************/
+
+    //Use this method to recover the ListView items when phone goes to portrait/landscape mode
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return (todoItems);
+    }
+
+    /********************************* Add this code ****************************/
+
+
+}
