@@ -1,0 +1,25 @@
+
+    <!-- **************** styles.xml content for portrait mode ***************** -->
+
+<resources>
+
+    <style name="ToDoTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="android:textSize">@dimen/font_port_size</item>
+    </style>
+
+</resources>
+
+    <!-- **************** styles.xml content for portrait mode ***************** -->
+
+
+
+
+    <!-- **************** styles.xml content for landscape mode ***************** -->
+
+<resources>
+<style name="ToDoTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+    <item name="android:textSize">@dimen/font_land_size</item>
+</style>
+</resources>
+
+    <!-- **************** styles.xml content for landscape mode ***************** -->
