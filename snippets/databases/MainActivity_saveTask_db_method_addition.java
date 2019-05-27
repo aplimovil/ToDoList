@@ -17,7 +17,8 @@ public class MainActivity extends AppCompatActivity {
 
         myButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                saveTask();
+                ToDoItem task = new ToDoItem(myEditText.getText().toString());
+                saveTask(task);
             }
         });
 
@@ -27,9 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
     /********************************** Add this code ************************************/
 
-    private void saveTask() {
+    private void saveTask(final ToDoItem task) {
         class SaveTask extends AsyncTask<Void, Void, Void> {
-            ToDoItem task = new ToDoItem(myEditText.getText().toString());
 
             @Override
             protected Void doInBackground(Void... voids) {
@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         SaveTask saveTask = new SaveTask();
         saveTask.execute();
     }
-
     /********************************** Add this code ************************************/
 
 }
