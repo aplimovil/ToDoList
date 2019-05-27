@@ -1,5 +1,6 @@
 package aplimovil.com.todolist;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         dbTodoItems = new ArrayList<ToDoItem>();
         todoItems = (ArrayList<String>) getLastCustomNonConfigurationInstance();
         if (todoItems == null)
-           todoItems = new ArrayList<String>();
+            todoItems = new ArrayList<String>();
         // Create the array adapter to bind the array to the listview
         aa = new ArrayAdapter<String>(this, R.layout.todolist_item, todoItems);
         // Bind the array adapter to the listview.
@@ -137,6 +139,10 @@ public class MainActivity extends AppCompatActivity {
             }
             case (R.id.addItem): {
                 addNewItem();
+                return true;
+            }
+            case (R.id.addQR): {
+                addQR();
                 return true;
             }
         }
@@ -247,7 +253,32 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        DeleteTask deleteTask= new DeleteTask();
+        DeleteTask deleteTask = new DeleteTask();
         deleteTask.execute();
     }
+
+    private void addQR() {
+        addingNew = true;
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.initiateScan();
+
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (resultCode == RESULT_OK) {
+            IntentResult scanResult = IntentIntegrator.parseActivityResult(
+                    requestCode, resultCode, intent);
+            if (scanResult != null) {
+                // Handle successful scan
+                String contents = scanResult.getContents();
+                saveTask(new ToDoItem(contents));
+            }
+        } else if (resultCode == RESULT_CANCELED) {
+            Toast.makeText(this, R.string.scan_canceled, Toast.LENGTH_SHORT)
+                    .show();
+        }
+
+    }
+
+
 }
