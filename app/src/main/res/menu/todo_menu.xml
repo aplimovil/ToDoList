@@ -15,4 +15,12 @@
         android:numericShortcut="1"
         android:title="@string/remove"
         app:showAsAction="always"></item>
+    <item
+        android:id="@+id/addQR"
+        android:alphabeticShortcut="q"
+        android:icon="@drawable/add_qr"
+        android:numericShortcut="4"
+        android:title="@string/add_qr"
+        app:showAsAction="always"></item>
+
 </menu>
