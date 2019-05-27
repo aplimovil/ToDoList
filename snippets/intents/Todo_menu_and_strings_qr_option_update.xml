@@ -1,0 +1,31 @@
+
+<!-- ******************* todo_menu.xml file ******************* -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- ******************* Add this code ******************* -->
+
+<item
+    android:id="@+id/addQR"
+    android:alphabeticShortcut="q"
+    android:icon="@drawable/add_qr"
+    android:numericShortcut="4"
+    android:title="@string/add_qr"
+    app:showAsAction="always"></item>
+
+    <!-- ******************* Add this code ******************* -->
+</menu>
+
+
+
+    <!-- ******************* strings.xml file ******************* -->
+
+<resources>
+
+<!-- ******************* Add this code ******************* -->
+
+<string name="add_qr">Add QR</string>
+<string name="scan_canceled">Scan canceled</string>
+
+<!-- ******************* Add this code ******************* -->
+</resources>

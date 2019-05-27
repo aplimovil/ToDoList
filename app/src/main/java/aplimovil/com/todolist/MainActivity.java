@@ -54,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
         myButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                saveTask();
+                ToDoItem task = new ToDoItem(myEditText.getText().toString());
+                saveTask(task);
             }
         });
 
@@ -211,9 +212,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void saveTask() {
+    private void saveTask(final ToDoItem task) {
         class SaveTask extends AsyncTask<Void, Void, Void> {
-            ToDoItem task = new ToDoItem(myEditText.getText().toString());
 
             @Override
             protected Void doInBackground(Void... voids) {
@@ -271,11 +271,7 @@ public class MainActivity extends AppCompatActivity {
             if (scanResult != null) {
                 // Handle successful scan
                 String contents = scanResult.getContents();
-
-                todoItems.add(0, contents);
-                aa.notifyDataSetChanged();
-                cancelAdd();
-
+                saveTask(new ToDoItem(contents));
             }
         } else if (resultCode == RESULT_CANCELED) {
             Toast.makeText(this, R.string.scan_canceled, Toast.LENGTH_SHORT)
