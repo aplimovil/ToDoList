@@ -1,5 +1,6 @@
 package aplimovil.com.todolist;
 
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter<String> aa;
     private boolean addingNew = false;
     private Button myButton;
+    //Hold the ToDoItem objects from database
+    private ArrayList<ToDoItem> dbTodoItems;
 
 
     @Override
@@ -37,9 +41,10 @@ public class MainActivity extends AppCompatActivity {
         myButton = (Button) findViewById(R.id.myButton);
 
         // Create the array list of to do items
+        dbTodoItems = new ArrayList<ToDoItem>();
         todoItems = (ArrayList<String>) getLastCustomNonConfigurationInstance();
         if (todoItems == null)
-            todoItems = new ArrayList<String>();
+           todoItems = new ArrayList<String>();
         // Create the array adapter to bind the array to the listview
         aa = new ArrayAdapter<String>(this, R.layout.todolist_item, todoItems);
         // Bind the array adapter to the listview.
@@ -47,17 +52,13 @@ public class MainActivity extends AppCompatActivity {
 
         myButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                todoItems.add(0,
-                        myEditText.getText().toString());
-                aa.notifyDataSetChanged();
-                myEditText.setText("");
-                cancelAdd();
+                saveTask();
             }
         });
 
         //Register a context menu for the ListView
         registerForContextMenu(myListView);
-
+        getTasks();
 
     }
 
@@ -150,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
                 AdapterView.AdapterContextMenuInfo menuInfo;
                 menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
                 int index = menuInfo.position;
-                removeItem(index);
+                deleteTask(dbTodoItems.get(index));
                 return true;
             }
         }
@@ -177,5 +178,76 @@ public class MainActivity extends AppCompatActivity {
         aa.notifyDataSetChanged();
     }
 
+    private void getTasks() {
+        class GetTasks extends AsyncTask<Void, Void, List<ToDoItem>> {
 
+            @Override
+            protected List<ToDoItem> doInBackground(Void... voids) {
+                List<ToDoItem> taskList = ToDoItemDatabaseAccesor
+                        .getInstance(getApplication()).toDoItemDAO().loadAllItems();
+                return taskList;
+            }
+
+            @Override
+            protected void onPostExecute(List<ToDoItem> tasks) {
+                super.onPostExecute(tasks);
+                todoItems.clear();
+                dbTodoItems.clear();
+                for (int i = 0; i < tasks.size(); i++) {
+                    todoItems.add(tasks.get(i).getTask());
+                    dbTodoItems.add(tasks.get(i));
+                }
+                aa.notifyDataSetChanged();
+            }
+        }
+        GetTasks getTasks = new GetTasks();
+        getTasks.execute();
+
+    }
+
+    private void saveTask() {
+        class SaveTask extends AsyncTask<Void, Void, Void> {
+            ToDoItem task = new ToDoItem(myEditText.getText().toString());
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                //adding to database
+                ToDoItemDatabaseAccesor.getInstance(getApplication()).toDoItemDAO().insertToDoItem(task);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                getTasks();
+                myEditText.setText("");
+                cancelAdd();
+            }
+        }
+
+        SaveTask saveTask = new SaveTask();
+        saveTask.execute();
+    }
+
+    private void deleteTask(final ToDoItem task) {
+        class DeleteTask extends AsyncTask<Void, Void, Void> {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                String s;
+                ToDoItemDatabaseAccesor
+                        .getInstance(getApplication()).toDoItemDAO().deleteToDoItem(task);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                getTasks();
+            }
+        }
+
+        DeleteTask deleteTask= new DeleteTask();
+        deleteTask.execute();
+    }
 }
