@@ -7,4 +7,6 @@
     <string name="cancel">Cancelar</string>
     <string name="default_task_name">Nueva tarea</string>
     <string name="menu_title">Tarea seleccionada</string>
+    <string name="add_qr">Adicionar QR</string>
+    <string name="scan_canceled">Scan cancelado</string>
 </resources>
