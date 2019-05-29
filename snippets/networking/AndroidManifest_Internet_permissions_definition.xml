@@ -2,7 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="aplimovil.com.todolist">
 
+    <!-- ************************** Add this code **************************** -->
+
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+    <!-- ************************** Add this code **************************** -->
 
     <application
         android:allowBackup="true"
@@ -11,13 +15,11 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/ToDoTheme"
+    <!-- ************************** Add this code **************************** -->
+
         android:usesCleartextTraffic="true">
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+
+    <!-- ************************** Add this code **************************** -->
     </application>
 
 </manifest>

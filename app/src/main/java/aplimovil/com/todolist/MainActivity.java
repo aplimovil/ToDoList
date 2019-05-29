@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.JsonReader;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +18,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +72,12 @@ public class MainActivity extends AppCompatActivity {
         registerForContextMenu(myListView);
         getTasks();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadTasks();
     }
 
     //Use this method to save EditText/Button status when phone goes to landscape/portrait mode
@@ -278,6 +293,90 @@ public class MainActivity extends AppCompatActivity {
                     .show();
         }
 
+    }
+
+    private void loadTasks() {
+
+        class LoadTasks extends AsyncTask<Void, Void, Void> {
+
+            private static final String TAG = "ToDo";
+            private ArrayList<ToDoItem> jsonTodoItems;
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                ArrayList<String> result = new ArrayList<>(0);
+                String myFeed = getApplication().getString(R.string.todo_feed);
+                try {
+                    URL url = new URL(myFeed);
+                    // Create a new HTTP URL connection
+                    URLConnection connection = url.openConnection();
+                    HttpURLConnection httpConnection = (HttpURLConnection) connection;
+                    int responseCode = httpConnection.getResponseCode();
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+                        InputStream in = httpConnection.getInputStream();
+                        jsonTodoItems = new ArrayList<>();
+                        //Parse the answer in JSON format
+                        parseJSON(in);
+                    }
+                    httpConnection.disconnect();
+                } catch (MalformedURLException e) {
+                    Log.e(TAG, "Malformed URL Exception.", e);
+                } catch (IOException e) {
+                    Log.e(TAG, "IO Exception.", e);
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                //Update the tasks list after downloading the content from Internet
+                todoItems.clear();
+                for (int i = 0; i < jsonTodoItems.size(); i++) {
+                    todoItems.add(jsonTodoItems.get(i).getTask());
+                }
+                aa.notifyDataSetChanged();
+            }
+
+            //Method to parse the tasks.json file available in th server
+            private void parseJSON(InputStream in) throws IOException {
+                // Create a new Json Reader to parse the input.
+                JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+                try {
+                    //JSON file starts with an array
+                    reader.beginArray();
+                    while (reader.hasNext()) {
+                        ToDoItem item = new ToDoItem(null);
+                        //Parse a specific object inside the array
+                        reader.beginObject();
+                        while (reader.hasNext()) {
+                            String value = reader.nextName();
+                            //It gets the property value and store it on the correct property of ToDoItem object
+                            switch (value) {
+                                case "name":
+                                    item.setTask(reader.nextString());
+                                    break;
+                                case "timestamp":
+                                    item.setTimestamp(reader.nextLong());
+                                    break;
+                                default:
+                                    reader.skipValue();
+                                    break;
+                            }
+                        }
+                        reader.endObject();
+                        jsonTodoItems.add(item);
+                    }
+                    reader.endArray();
+                } finally {
+                    reader.close();
+                }
+            }
+        }
+
+        LoadTasks loadTasks = new LoadTasks();
+        loadTasks.execute();
     }
 
 

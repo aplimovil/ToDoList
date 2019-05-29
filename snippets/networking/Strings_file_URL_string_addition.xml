@@ -1,0 +1,9 @@
+<resources>
+
+    <!-- ********************** Add this code ************************* -->
+
+    <string name="todo_feed">http://10.0.2.2:8080/tasks.json</string>
+
+    <!-- ********************** Add this code ************************* -->
+
+</resources>
